@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import {
     Box,
     CircularProgress,
-    TableFooter,
     Typography,
     Table,
     TableBody,
@@ -21,13 +20,23 @@ export default function List(props) {
     return (
         <>
             {props.notesList !== 0 ? (
-                props.notesList.length === 0 ? (
-                    <Box textAlign="center" m={5}>
-                        <Typography variant="h4">No Notes Available</Typography>
-                    </Box>
-                ) : (
-                    <NoteTable {...props} />
-                )
+                <>
+                    <TextField
+                        fullWidth
+                        label="Search Notes"
+                        variant="outlined"
+                        onChange={(e) => props.setSearchValue(e.target.value)}
+                    />
+                    {props.notesList.length === 0 ? (
+                        <Box textAlign="center" m={5}>
+                            <Typography variant="h4">
+                                No Notes Available
+                            </Typography>
+                        </Box>
+                    ) : (
+                        <NoteTable {...props} />
+                    )}
+                </>
             ) : (
                 <Box textAlign="center" m={5}>
                     <CircularProgress />
@@ -62,15 +71,29 @@ function NoteTable(props) {
     }
 
     return (
-        <Box mt={2}>
-            <TextField
-                fullWidth
-                label="Search Notes"
-                variant="outlined"
-                onChange={(e) => props.setSearchValue(e.target.value)}
-            />
+        <Box>
             <Table>
                 <TableHead>
+                    <TableRow>
+                        <TableCell colSpan={2}>
+                            <Pagination
+                                count={Math.ceil(props.notesList.length / 5)}
+                                siblingCount={0}
+                                variant="outlined"
+                                color="secondary"
+                                shape="rounded"
+                                onChange={(_, pageNumber) =>
+                                    setCurrPage(pageNumber)
+                                }
+                                showFirstButton
+                                showLastButton
+                            />
+                        </TableCell>
+                        <TableCell align="right" colSpan={2}>
+                            <Typography>Click on note title to edit</Typography>
+                        </TableCell>
+                    </TableRow>
+
                     <TableRow>
                         <TableCell align="center">Sr no.</TableCell>
                         <TableCell align="center">Title</TableCell>
@@ -111,29 +134,6 @@ function NoteTable(props) {
                         </TableRow>
                     )}
                 </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={4}>
-                            <Pagination
-                                count={Math.ceil(props.notesList.length / 5)}
-                                siblingCount={0}
-                                variant="outlined"
-                                color="secondary"
-                                shape="rounded"
-                                onChange={(_, pageNumber) =>
-                                    setCurrPage(pageNumber)
-                                }
-                                showFirstButton
-                                showLastButton
-                            />
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell align="center" colSpan={4}>
-                            <Typography>Click a note title to edit</Typography>
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>
             </Table>
         </Box>
     );

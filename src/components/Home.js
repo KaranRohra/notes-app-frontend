@@ -71,6 +71,7 @@ const Home = () => {
                         textAlign="center"
                         className={classes.noteListHeading}
                         p={1}
+                        mb={2}
                     >
                         <Typography variant="h4">Notes list</Typography>
                     </Box>

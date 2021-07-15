@@ -23,6 +23,8 @@ function App() {
                     <Route exact path="/edit/:id" component={Edit} />
                 </Switch>
             </Router>
+            <Box height={200}/>
+                
         </>
     );
 }
