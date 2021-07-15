@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import useStyles from "./Styles";
+import { Box, Typography } from "@material-ui/core";
+import Home from "./components/Home";
+import Edit from "./components/Edit";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const classes = useStyles();
+
+    return (
+        <>
+            <Box
+                textAlign="center"
+                className={classes.headingColor}
+                p={2}
+                mb={2}
+            >
+                <Typography variant="h2">Notes App</Typography>
+            </Box>
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/edit/:id" component={Edit} />
+                </Switch>
+            </Router>
+        </>
+    );
 }
 
 export default App;
